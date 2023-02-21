@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface LaptopService {
 
-    Laptop save(Laptop laptop);
+    Laptop save(Laptop laptop) throws Exception;
 
-    Laptop update(int id, Laptop laptop);
+    Laptop update(int id, Laptop laptop) throws Exception;
 
-    Laptop findById(int id);
+    Laptop findById(int id) throws Exception;
 
-    List<Laptop> findAll();
+    List<Laptop> findAll() throws Exception;
 
-    Laptop delete(int id);
+    void delete(int id) throws Exception;
 
 }
