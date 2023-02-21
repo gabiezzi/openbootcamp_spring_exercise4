@@ -30,4 +30,11 @@ public class Laptop {
 
     private boolean integratedGraphics;
 
+    public Laptop(String brand, String processor, String memory, String disk, boolean integratedGraphics) {
+        this.brand = brand;
+        this.processor = processor;
+        this.memory = memory;
+        this.disk = disk;
+        this.integratedGraphics = integratedGraphics;
+    }
 }
