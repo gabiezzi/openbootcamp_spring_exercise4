@@ -4,8 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Laptop {
 
     @Id
@@ -22,60 +30,4 @@ public class Laptop {
 
     private boolean integratedGraphics;
 
-    public Laptop(int id, String brand, String processor, String memory, String disk, boolean integratedGraphics) {
-        this.id = id;
-        this.brand = brand;
-        this.processor = processor;
-        this.memory = memory;
-        this.disk = disk;
-        this.integratedGraphics = integratedGraphics;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public String getMemory() {
-        return memory;
-    }
-
-    public void setMemory(String memory) {
-        this.memory = memory;
-    }
-
-    public String getDisk() {
-        return disk;
-    }
-
-    public void setDisk(String disk) {
-        this.disk = disk;
-    }
-
-    public boolean isIntegratedGraphics() {
-        return integratedGraphics;
-    }
-
-    public void setIntegratedGraphics(boolean integratedGraphics) {
-        this.integratedGraphics = integratedGraphics;
-    }
 }

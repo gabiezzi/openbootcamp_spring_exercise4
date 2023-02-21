@@ -42,13 +42,15 @@ public class LaptopServiceImpl implements LaptopService {
     @Override
     public Laptop update(int id, Laptop laptop) throws Exception {
 
-        Optional<Laptop> optLaptop = laptopRepository.findById(id);
+        Laptop optLaptop = findById(id);
 
-        if (optLaptop.isPresent())
-            laptopRepository.save(laptop);
+            optLaptop.setDisk(laptop.getDisk());
+            optLaptop.setBrand(laptop.getBrand());
+            optLaptop.setProcessor(laptop.getProcessor());
+            optLaptop.setMemory(laptop.getMemory());
+            optLaptop.setIntegratedGraphics(laptop.isIntegratedGraphics());
 
-        throw new Exception("No laptop with this id");
-
+            return laptopRepository.save(optLaptop);
 
     }
 
