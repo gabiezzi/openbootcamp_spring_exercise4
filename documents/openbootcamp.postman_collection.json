@@ -125,6 +125,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "delete ALL",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/laptops/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"laptops",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

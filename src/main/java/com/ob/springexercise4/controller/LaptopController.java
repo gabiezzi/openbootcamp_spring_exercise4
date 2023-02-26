@@ -63,4 +63,13 @@ public class LaptopController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping()
+    public ResponseEntity<Laptop> deleteAll() throws Exception {
+
+        laptopService.deleteAll();
+
+        return ResponseEntity.noContent().build();
+
+    }
+
 }

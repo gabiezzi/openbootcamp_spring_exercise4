@@ -83,4 +83,16 @@ public class LaptopServiceImpl implements LaptopService {
         laptopRepository.delete(findById(id));
 
     }
+
+    @Transactional
+    @Override
+    public void deleteAll() throws Exception {
+
+        if(laptopRepository.count() == 0 )
+            throw new Exception("no values found in the list");
+
+        laptopRepository.deleteAll();
+
+
+    }
 }
