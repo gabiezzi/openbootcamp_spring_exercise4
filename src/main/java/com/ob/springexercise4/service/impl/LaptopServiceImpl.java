@@ -4,7 +4,6 @@ import com.ob.springexercise4.entity.Laptop;
 import com.ob.springexercise4.repository.LaptopRepository;
 import com.ob.springexercise4.service.LaptopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +41,7 @@ public class LaptopServiceImpl implements LaptopService {
     @Override
     public Laptop update(int id, Laptop laptop) throws Exception {
 
+
         Laptop optLaptop = findById(id);
 
             optLaptop.setDisk(laptop.getDisk());
@@ -57,12 +57,11 @@ public class LaptopServiceImpl implements LaptopService {
     @Override
     public Laptop findById(int id) throws Exception {
 
-        Optional<Laptop> optLaptop = laptopRepository.findById(id);
+        if (!laptopRepository.existsById(id)){
+            throw new Exception("No laptop with that id");
+        }
 
-        if (optLaptop.isEmpty())
-            throw new Exception("No content with that id");
-
-        return optLaptop.get();
+        return laptopRepository.findById(id).get();
 
     }
 

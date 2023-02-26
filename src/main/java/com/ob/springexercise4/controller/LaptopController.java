@@ -23,7 +23,7 @@ public class LaptopController {
     public ResponseEntity<Laptop> save(@RequestBody Laptop laptop) throws Exception{
 
         if (laptop == null)
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(laptopService.save(laptop));
 
@@ -32,8 +32,8 @@ public class LaptopController {
     @PutMapping("/{id}")
     public ResponseEntity<Laptop> update(@PathVariable int id, @RequestBody Laptop laptop) throws Exception {
 
-        if (id == 0 || laptop.equals(null))
-            return ResponseEntity.noContent().build();
+        if (id == 0 || laptop == null)
+            return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(laptopService.update(id, laptop));
 
@@ -43,7 +43,7 @@ public class LaptopController {
     public ResponseEntity<Laptop> findById(@PathVariable int id) throws Exception {
 
         if (id == 0)
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(laptopService.findById(id));
 
     }
@@ -54,10 +54,13 @@ public class LaptopController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteLaptop(@PathVariable int id) throws Exception {
+    public ResponseEntity<Laptop> deleteLaptop(@PathVariable int id) throws Exception {
         if (id == 0)
-            throw new Exception("no element with that id");
+            return ResponseEntity.badRequest().build();
+
         laptopService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
