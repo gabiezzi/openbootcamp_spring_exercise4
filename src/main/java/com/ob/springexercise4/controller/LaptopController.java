@@ -2,9 +2,11 @@ package com.ob.springexercise4.controller;
 
 import com.ob.springexercise4.entity.Laptop;
 import com.ob.springexercise4.service.impl.LaptopServiceImpl;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class LaptopController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Laptop> save(@RequestBody Laptop laptop) throws Exception{
+    public ResponseEntity<Laptop> save(@ApiParam("Body with the properties of one laptop element") @RequestBody Laptop laptop) throws Exception{
 
         if (laptop == null)
             return ResponseEntity.badRequest().build();
@@ -30,7 +32,7 @@ public class LaptopController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Laptop> update(@PathVariable int id, @RequestBody Laptop laptop) throws Exception {
+    public ResponseEntity<Laptop> update(@ApiParam("Element primary key") @PathVariable int id, @RequestBody Laptop laptop) throws Exception {
 
         if (id == 0 || laptop == null)
             return ResponseEntity.badRequest().build();
@@ -40,7 +42,7 @@ public class LaptopController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Laptop> findById(@PathVariable int id) throws Exception {
+    public ResponseEntity<Laptop> findById(@ApiParam("Element primary key") @PathVariable int id) throws Exception {
 
         if (id == 0)
             return ResponseEntity.badRequest().build();
@@ -54,7 +56,7 @@ public class LaptopController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Laptop> deleteLaptop(@PathVariable int id) throws Exception {
+    public ResponseEntity<Laptop> deleteLaptop(@ApiParam("Element primary key") @PathVariable int id) throws Exception {
         if (id == 0)
             return ResponseEntity.badRequest().build();
 
@@ -63,6 +65,7 @@ public class LaptopController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiIgnore
     @DeleteMapping()
     public ResponseEntity<Laptop> deleteAll() throws Exception {
 

@@ -32,9 +32,6 @@ public class LaptopServiceImpl implements LaptopService {
 
         return laptopRepository.save(laptop);
 
-
-
-
     }
 
     @Transactional
@@ -95,4 +92,6 @@ public class LaptopServiceImpl implements LaptopService {
 
 
     }
+
+
 }

@@ -17,6 +17,7 @@ public interface LaptopService {
 
     void delete(int id) throws Exception;
 
-    @Transactional
     void deleteAll() throws Exception;
+
+
 }
