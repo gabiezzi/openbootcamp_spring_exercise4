@@ -12,7 +12,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -89,7 +88,6 @@ class LaptopServiceImplTest {
         //Assert
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(200, response.getStatusCodeValue());
         assertEquals(response.getBody().getId(),laptop.getId());
         assertEquals(response.getBody().getProcessor() , laptop.getProcessor());
 

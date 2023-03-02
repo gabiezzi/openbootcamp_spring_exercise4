@@ -1,6 +1,7 @@
 package com.ob.springexercise4.entity;
 
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ApiModel("Laptop entity represents a model of laptop with different properties")
 public class Laptop {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

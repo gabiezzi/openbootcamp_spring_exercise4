@@ -2,6 +2,8 @@ package com.ob.springexercise4.controller;
 
 import com.ob.springexercise4.entity.Laptop;
 import com.ob.springexercise4.service.impl.LaptopServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,9 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 @RestController
-@RequestMapping("/laptops/")
+@Api(value = "Laptop Controler")
 public class LaptopController {
+
 
     LaptopServiceImpl laptopService;
 
@@ -22,7 +25,8 @@ public class LaptopController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Laptop> save(@ApiParam("Body with the properties of one laptop element") @RequestBody Laptop laptop) throws Exception{
+    @ApiOperation(value = "Create a new laptop")
+    public ResponseEntity<Laptop> save(@ApiParam(value = "Body with the properties of one laptop element",required = true) @RequestBody Laptop laptop) throws Exception{
 
         if (laptop == null)
             return ResponseEntity.badRequest().build();
@@ -32,7 +36,9 @@ public class LaptopController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Laptop> update(@ApiParam("Element primary key") @PathVariable int id, @RequestBody Laptop laptop) throws Exception {
+    @ApiOperation(value = "Update an existing laptop by ID")
+    public ResponseEntity<Laptop> update(@ApiParam(value = "Element primary key", required = true) @PathVariable int id,
+                                         @ApiParam(value = "Body of the laptop updated", required = true) @RequestBody Laptop laptop) throws Exception {
 
         if (id == 0 || laptop == null)
             return ResponseEntity.badRequest().build();
@@ -42,7 +48,8 @@ public class LaptopController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Laptop> findById(@ApiParam("Element primary key") @PathVariable int id) throws Exception {
+    @ApiOperation(value = "Get a laptop by ID")
+    public ResponseEntity<Laptop> findById(@ApiParam(value = "Element primary key", required = true) @PathVariable int id) throws Exception {
 
         if (id == 0)
             return ResponseEntity.badRequest().build();
@@ -50,13 +57,16 @@ public class LaptopController {
 
     }
     @GetMapping("/getAll")
+    @ApiOperation(value = "Get the list of existing laptops")
     public ResponseEntity<List<Laptop>> findAll() throws Exception {
 
         return ResponseEntity.ok(laptopService.findAll());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Laptop> deleteLaptop(@ApiParam("Element primary key") @PathVariable int id) throws Exception {
+    @ApiOperation(value = "Delete a laptop by ID")
+    public ResponseEntity<Laptop> deleteLaptop(@ApiParam(value = "Element primary key" , required = true) @PathVariable int id) throws Exception {
+
         if (id == 0)
             return ResponseEntity.badRequest().build();
 
@@ -67,6 +77,7 @@ public class LaptopController {
 
     @ApiIgnore
     @DeleteMapping()
+    @ApiOperation(value = "Delete all the existing laptops")
     public ResponseEntity<Laptop> deleteAll() throws Exception {
 
         laptopService.deleteAll();
