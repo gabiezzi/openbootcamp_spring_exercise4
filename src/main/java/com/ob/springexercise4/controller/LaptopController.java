@@ -13,6 +13,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 @RestController
+@RequestMapping("/laptops/")
 @Api(value = "Laptop Controler")
 public class LaptopController {
 
