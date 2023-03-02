@@ -87,4 +87,14 @@ public class LaptopController {
 
     }
 
+    @ApiIgnore
+    @GetMapping("/count")
+    @ApiOperation(value = "Count all the existing laptops")
+    public ResponseEntity<Long> count() throws Exception {
+
+        return ResponseEntity.ok(laptopService.count());
+
+    }
+
+
 }

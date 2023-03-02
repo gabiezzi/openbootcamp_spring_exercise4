@@ -19,5 +19,6 @@ public interface LaptopService {
 
     void deleteAll() throws Exception;
 
+    Long count() throws Exception;
 
 }

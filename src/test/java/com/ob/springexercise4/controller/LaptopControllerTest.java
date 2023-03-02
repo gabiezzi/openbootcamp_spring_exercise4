@@ -5,20 +5,27 @@ import com.ob.springexercise4.repository.LaptopRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.TestPropertySource;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) //@SpringBootTest -> recibe peticiones htttp // web enviroment puerto aleatorio
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(locations = "classpath:test.properties")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class LaptopControllerTest {
 
 
@@ -41,6 +48,7 @@ class LaptopControllerTest {
 
     @DisplayName("Test the creating and save of a Laptop entity")
     @Test
+    @Rollback(value = false)
     void saveTest() {
 
         HttpHeaders headers = new HttpHeaders();
@@ -76,6 +84,7 @@ class LaptopControllerTest {
 
     @DisplayName("Test getting a laptop by ID")
     @Test
+    @Rollback(value = false)
     void findByIdTest() {
         //Arrange
 
@@ -93,7 +102,7 @@ class LaptopControllerTest {
         assertEquals(response.getBody().getId(), laptop.getId());
         assertEquals(response.getBody().getProcessor(), laptop.getProcessor());
 
-        laptopRepository.delete(laptop);
+        //laptopRepository.delete(laptop);
 
 
     }
@@ -131,14 +140,14 @@ class LaptopControllerTest {
         assertEquals(laptop2.getMemory(), laptops.get(1).getMemory());
         assertEquals(laptop2.getBrand(), laptops.get(1).getBrand());
 
-        laptopRepository.delete(laptops.get(0));
-        laptopRepository.delete(laptops.get(1));
+        laptopRepository.deleteAll();
 
 
     }
 
     @DisplayName("Test updating an existing laptop by ID")
     @Test
+    @Rollback(value = false)
     void updateTest() {
 
         //Arrange
@@ -166,12 +175,60 @@ class LaptopControllerTest {
 
         //Assert
 
-        assertEquals(HttpStatus.OK , response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedLaptop.getBrand(), response.getBody().getBrand());
         assertEquals(updatedLaptop.getProcessor(), response.getBody().getProcessor());
         assertEquals(updatedLaptop.getMemory(), response.getBody().getMemory());
         assertEquals(updatedLaptop.getDisk(), response.getBody().getDisk());
         assertEquals(updatedLaptop.isIntegratedGraphics(), response.getBody().isIntegratedGraphics());
+
+        //laptopRepository.deleteAll();
+    }
+
+    @DisplayName("Test deleting of an existing laptop by ID")
+    @Test
+    @Rollback(value = false)
+    void deleteTest() {
+
+        Laptop laptop3 = new Laptop("Hp", "i5", "8gb", "256gb", true);
+        laptop3.setId(1);
+        Laptop savedLaptop = laptopRepository.save(laptop3);
+
+        Laptop laptop4 = new Laptop("Bangho", "i5", "8gb", "256gb", true);
+        laptop3.setId(2);
+        Laptop savedLaptop2 = laptopRepository.save(laptop3);
+
+        Long countLaptops = laptopRepository.count();
+
+        ResponseEntity<Void> response = testRestTemplate.exchange("/laptops/1", HttpMethod.DELETE, null, Void.class);
+
+        // assert that the response status code is 204 No Content
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+        ResponseEntity<Long> countResponse = testRestTemplate.getForEntity("/laptops/count", Long.class);
+        assertEquals(countLaptops - 1L, countResponse.getBody());
+
+    }
+
+    @DisplayName("Test deleting all the laptops")
+    @Test
+    @Rollback(value = false)
+    void deleteAllTest() {
+
+        //Arrange
+        Laptop laptop = new Laptop("gigabyte", "i7", "32gb", "4Tb", false);
+        Laptop laptop2 = new Laptop("Toshiba", "ryzen 7", "32gb", "4Tb", false);
+
+        laptopRepository.saveAll(Arrays.asList(laptop, laptop2));
+
+        //Act
+        ResponseEntity<Void> response = testRestTemplate.exchange("/laptops/", HttpMethod.DELETE, null, Void.class);
+
+
+        //Arrange
+
+        assertEquals(HttpStatus.NO_CONTENT , response.getStatusCode());
+        assertEquals(0, laptopRepository.count());
 
 
     }

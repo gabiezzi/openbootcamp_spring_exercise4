@@ -93,5 +93,10 @@ public class LaptopServiceImpl implements LaptopService {
 
     }
 
+    @Override
+    public Long count() throws Exception {
+        return laptopRepository.count();
+    }
+
 
 }
