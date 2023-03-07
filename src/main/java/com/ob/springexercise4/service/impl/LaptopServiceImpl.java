@@ -4,7 +4,6 @@ import com.ob.springexercise4.entity.Laptop;
 import com.ob.springexercise4.repository.LaptopRepository;
 import com.ob.springexercise4.service.LaptopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,34 +32,33 @@ public class LaptopServiceImpl implements LaptopService {
 
         return laptopRepository.save(laptop);
 
-
-
-
     }
 
     @Transactional
     @Override
     public Laptop update(int id, Laptop laptop) throws Exception {
 
-        Optional<Laptop> optLaptop = laptopRepository.findById(id);
 
-        if (optLaptop.isPresent())
-            laptopRepository.save(laptop);
+        Laptop optLaptop = findById(id);
 
-        throw new Exception("No laptop with this id");
+            optLaptop.setDisk(laptop.getDisk());
+            optLaptop.setBrand(laptop.getBrand());
+            optLaptop.setProcessor(laptop.getProcessor());
+            optLaptop.setMemory(laptop.getMemory());
+            optLaptop.setIntegratedGraphics(laptop.isIntegratedGraphics());
 
+            return laptopRepository.save(optLaptop);
 
     }
 
     @Override
     public Laptop findById(int id) throws Exception {
 
-        Optional<Laptop> optLaptop = laptopRepository.findById(id);
+        if (!laptopRepository.existsById(id)){
+            throw new Exception("No laptop with that id");
+        }
 
-        if (optLaptop.isEmpty())
-            throw new Exception("No content with that id");
-
-        return optLaptop.get();
+        return laptopRepository.findById(id).get();
 
     }
 
@@ -82,4 +80,23 @@ public class LaptopServiceImpl implements LaptopService {
         laptopRepository.delete(findById(id));
 
     }
+
+    @Transactional
+    @Override
+    public void deleteAll() throws Exception {
+
+        if(laptopRepository.count() == 0 )
+            throw new Exception("no values found in the list");
+
+        laptopRepository.deleteAll();
+
+
+    }
+
+    @Override
+    public Long count() throws Exception {
+        return laptopRepository.count();
+    }
+
+
 }

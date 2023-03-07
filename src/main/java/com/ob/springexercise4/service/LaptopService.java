@@ -1,6 +1,7 @@
 package com.ob.springexercise4.service;
 
 import com.ob.springexercise4.entity.Laptop;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,5 +16,9 @@ public interface LaptopService {
     List<Laptop> findAll() throws Exception;
 
     void delete(int id) throws Exception;
+
+    void deleteAll() throws Exception;
+
+    Long count() throws Exception;
 
 }

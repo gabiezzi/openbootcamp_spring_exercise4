@@ -1,81 +1,50 @@
 package com.ob.springexercise4.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel("Laptop entity represents a model of laptop with different properties")
 public class Laptop {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @ApiModelProperty("Manufacturing company")
     private String brand;
 
+    @ApiModelProperty("Processor model")
     private String processor;
 
+    @ApiModelProperty("Capacity of ram memory")
     private String memory;
 
     private String disk;
 
     private boolean integratedGraphics;
 
-    public Laptop(int id, String brand, String processor, String memory, String disk, boolean integratedGraphics) {
-        this.id = id;
+    public Laptop(String brand, String processor, String memory, String disk, boolean integratedGraphics) {
         this.brand = brand;
         this.processor = processor;
         this.memory = memory;
         this.disk = disk;
-        this.integratedGraphics = integratedGraphics;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public String getMemory() {
-        return memory;
-    }
-
-    public void setMemory(String memory) {
-        this.memory = memory;
-    }
-
-    public String getDisk() {
-        return disk;
-    }
-
-    public void setDisk(String disk) {
-        this.disk = disk;
-    }
-
-    public boolean isIntegratedGraphics() {
-        return integratedGraphics;
-    }
-
-    public void setIntegratedGraphics(boolean integratedGraphics) {
         this.integratedGraphics = integratedGraphics;
     }
 }
