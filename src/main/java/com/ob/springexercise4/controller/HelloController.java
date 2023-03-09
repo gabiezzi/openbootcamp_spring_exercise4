@@ -19,5 +19,11 @@ public class HelloController {
 
         return ResponseEntity.ok(helloService.returnHello());
 
+    } @GetMapping("behave")
+    @Operation(summary = "It gives a behave baby")
+    public ResponseEntity<String> behaveBaby() {
+
+        return ResponseEntity.ok(helloService.behaveBaby());
+
     }
 }

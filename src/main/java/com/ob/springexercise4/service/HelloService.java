@@ -4,4 +4,5 @@ public interface HelloService {
 
     public String returnHello();
 
+    String behaveBaby();
 }
